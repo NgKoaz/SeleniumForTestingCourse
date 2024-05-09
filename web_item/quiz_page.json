@@ -1,0 +1,7 @@
+{
+  "choice": ".answer .r0 input[type=\"radio\"]",
+  "finish_button": ".endtestlink",
+  "submit_button": ".submitbtns #frm-finishattempt button",
+  "submit_button_in_warning_modal": ".modal.show .modal-footer button:last-child",
+  "quiz_review_summary": ".quizreviewsummary"
+}

@@ -1,0 +1,18 @@
+{
+    "quiz1": {
+        "expired": false,
+        "done_before": false
+    },
+    "quiz2": {
+        "expired": true,
+        "done_before": false
+    },
+    "quiz3": {
+        "expired": true,
+        "done_before": true
+    },
+    "quiz4": {
+        "expired": false,
+        "done_before": true
+    }
+}

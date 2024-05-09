@@ -1,0 +1,42 @@
+{
+  "AssignmentSubmission1": {
+    "submission_before": false,
+    "expired": false,
+    "text_length": 390
+  },
+  "AssignmentSubmission2": {
+    "submission_before": true,
+    "expired": true,
+    "text": null
+  },
+  "AssignmentSubmission3": {
+    "submission_before": true,
+    "expired": false,
+    "text": null
+  },
+  "AssignmentSubmission4": {
+    "submission_before": false,
+    "expired": true,
+    "text": null
+  },
+  "AssignmentSubmission5": {
+    "submission_before": false,
+    "expired": false,
+    "text": 0
+  },
+  "AssignmentSubmission6": {
+    "submission_before": false,
+    "expired": false,
+    "text": 1
+  },
+  "AssignmentSubmission7": {
+    "submission_before": false,
+    "expired": false,
+    "text": 500
+  },
+  "AssignmentSubmission8": {
+    "submission_before": false,
+    "expired": false,
+    "text": 499
+  }
+}
