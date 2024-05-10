@@ -1,3 +1,4 @@
 {
-  "attempt_button": ".quizstartbuttondiv button"
+  "attempt_button": ".quizstartbuttondiv button",
+  "attempt_button_dialog": "#id_submitbutton"
 }

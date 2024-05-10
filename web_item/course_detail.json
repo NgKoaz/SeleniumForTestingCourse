@@ -1,6 +1,6 @@
 {
   "quiz": ".quiz a.aalink.stretched-link",
-  "assignment": ".assign",
+  "assignment": ".assign a",
   "collapse_all": "#collapsesections",
   "nav": ".navigation"
 }

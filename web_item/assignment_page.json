@@ -1,0 +1,5 @@
+{
+  "textarea": "#id_onlinetext_editor",
+  "save_button": "#id_submitbutton",
+  "cancel_button": "#id_cancel"
+}

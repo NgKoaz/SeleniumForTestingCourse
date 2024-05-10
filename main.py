@@ -125,7 +125,22 @@ class Main:
             self.unFoldAll()
 
             # Do something
-            doSomething()
+            # doSomething()
+            with open("web_item/course_detail.json", "r") as file:
+                js = json.load(file)
+                quiz_selector = js["quiz"]
+                assignment_selector = js["assignment"]
+
+            with open("web_item/start_quiz_page.json", "r") as file:
+                js = json.load(file)
+                attempt_button_selector = js["attempt_button"]
+
+            quizzes = self.driver.find_elements(By.CSS_SELECTOR, assignment_selector)
+
+            for quiz in quizzes:
+                print(quiz.get_attribute("href"))
+
+            # ---------------------------------
 
             self.driver.back()
             course_index += 1

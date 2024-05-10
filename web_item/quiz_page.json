@@ -3,5 +3,7 @@
   "finish_button": ".endtestlink",
   "submit_button": ".submitbtns #frm-finishattempt button",
   "submit_button_in_warning_modal": ".modal.show .modal-footer button:last-child",
-  "quiz_review_summary": ".quizreviewsummary"
+  "quiz_review_summary": ".quizreviewsummary",
+  "answer_selection_box": ".answer input[type=\"radio\"]",
+  "question_not_answer_yet": "div.notyetanswered"
 }
