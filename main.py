@@ -30,7 +30,7 @@ class Main:
         # Go to assignment page
         self.assignmentTest()
 
-        time.sleep(200)
+        time.sleep(5)
 
     def assignmentTest(self):
         assignmentTests = json.loads(MyExcel.getAssignmentTest())["assignment"]
