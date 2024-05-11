@@ -1,5 +1,9 @@
 {
   "textarea": "#id_onlinetext_editor",
   "save_button": "#id_submitbutton",
-  "cancel_button": "#id_cancel"
+  "cancel_button": "#id_cancel",
+  "new_file_button": ".fp-btn-add a",
+  "input_file": "input[type=\"file\"]",
+  "upload_button": ".mdl-align button",
+  "submit_button": "#fgroup_id_buttonar input[name=\"submitbutton\"]"
 }

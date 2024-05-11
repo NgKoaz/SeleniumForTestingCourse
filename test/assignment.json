@@ -1,24 +1,29 @@
 {
   "assignment": [
     {
-      "url": "https://school.moodledemo.net/mod/assign/view.php?id=787",
-      "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been"
+      "url": "https://school.moodledemo.net/mod/assign/view.php?id=788",
+      "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
+      "filepath": "data/quiz.xlsx"
     },
     {
-      "url": "https://school.moodledemo.net/mod/assign/view.php?id=787",
-      "text": ""
+      "url": "https://school.moodledemo.net/mod/assign/view.php?id=788",
+      "text": "",
+      "filepath": "data/assignment.xlsx"
     },
     {
-      "url": "https://school.moodledemo.net/mod/assign/view.php?id=787",
-      "text": "Lorem"
+      "url": "https://school.moodledemo.net/mod/assign/view.php?id=788",
+      "text": "Lorem",
+      "filepath": ""
     },
     {
-      "url": "https://school.moodledemo.net/mod/assign/view.php?id=787",
-      "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has"
+      "url": "https://school.moodledemo.net/mod/assign/view.php?id=788",
+      "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has",
+      "filepath": ""
     },
     {
-      "url": "https://school.moodledemo.net/mod/assign/view.php?id=787",
-      "text": "Ipsum is simply dummy text of the printing and typesetting industry."
+      "url": "https://school.moodledemo.net/mod/assign/view.php?id=788",
+      "text": "Ipsum is simply dummy text of the printing and typesetting industry.",
+      "filepath": ""
     }
   ]
 }

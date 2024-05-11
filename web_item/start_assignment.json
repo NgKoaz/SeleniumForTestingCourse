@@ -1,4 +1,4 @@
 {
   "assignment_button": ".singlebutton button",
-  "add_submission_text": "Save submission"
+  "continue_button": ".singlebutton:last-child button"
 }

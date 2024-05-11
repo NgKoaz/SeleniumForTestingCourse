@@ -5,8 +5,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from my_excel import MyExcel
 import json
 import time
+import os
 
 
 class Main:
@@ -24,27 +26,33 @@ class Main:
         # Check has logon.
         self.checkHasLogon()
         # Go to quiz page
-        #self.quizTest()
+        self.quizTest()
         # Go to assignment page
         self.assignmentTest()
 
         time.sleep(200)
 
     def assignmentTest(self):
-        with open("test/assignment.json", "r") as file:
-            js = json.load(file)
-            assignmentTests = js["assignment"]
-
+        assignmentTests = json.loads(MyExcel.getAssignmentTest())["assignment"]
+        idx = 1
         for testcase in assignmentTests:
-            self.goToAssignmentPage(testcase)
+            if self.goToAssignmentPage(testcase):
+                MyExcel.setAssignmentResult(idx, "Success")
+            else:
+                MyExcel.setAssignmentResult(idx, "Fail")
+            idx += 1
+            time.sleep(2)
 
     def quizTest(self):
-        with open("test/quiz.json", "r") as file:
-            js = json.load(file)
-            quizTestcases = js["quiz"]
+        quizTestcases = json.loads(MyExcel.getQuizTest())["quiz"]
+        idx = 1
         for quizTc in quizTestcases:
-            self.goToQuizPage(quizTc)
-            time.sleep(3)
+            if self.goToQuizPage(quizTc):
+                MyExcel.setQuizResult(idx, "Success")
+            else:
+                MyExcel.setQuizResult(idx, "Fail")
+            idx += 1
+            time.sleep(2)
 
     def goToLoginPageAndLogin(self):
         # Get login page and credentials
@@ -139,7 +147,7 @@ class Main:
             )
         except:
             self.driver.back()
-            return
+            return False
 
         # Do quiz
         question_id = []
@@ -149,7 +157,6 @@ class Main:
             question_id.append(_id)
             idx = int(_id.split("-")[-1])
             answer_box_selector = f"#{_id} input[value=\"{answers[idx - 1]}\"][type=\"radio\"]"
-            print(answer_box_selector)
             answer_box = self.driver.find_element(By.CSS_SELECTOR, answer_box_selector)
             answer_box.click()
             time.sleep(0.1)
@@ -171,19 +178,26 @@ class Main:
 
         # We are at review page
         correct_answer = self.driver.find_elements(By.CSS_SELECTOR, correct_answer_selector)
-        print(len(correct_answer))
+        print("Point:", len(correct_answer))
+        return True
 
     def goToAssignmentPage(self, assignmentTest):
         url = assignmentTest["url"]
-        text = assignmentTest["text"]
-
+        filepath = assignmentTest["filepath"]
+        if not filepath:
+            return
         with open("web_item/start_assignment.json", "r") as file:
             js = json.load(file)
             assignment_button_selector = js["assignment_button"]
+            continue_button_selector = js["continue_button"]
         with open("web_item/assignment_page.json", "r") as file:
             js = json.load(file)
             textarea_selector = js["textarea"]
             save_button_selector = js["save_button"]
+            new_file_button_selector = js["new_file_button"]
+            input_file_selector = js["input_file"]
+            upload_button_selector = js["upload_button"]
+            submit_button_selector = js["submit_button"]
 
         # Go to quiz page moodle
         self.driver.get(url=url)
@@ -192,29 +206,61 @@ class Main:
             lambda x: self.driver.find_element(By.CSS_SELECTOR, assignment_button_selector)
         )
 
-        print("Click button")
-        assignment_button = self.driver.find_element(By.CSS_SELECTOR, assignment_button_selector)
-        assignment_button.click()
+        print("Click start button")
+        assignment_buttons = self.driver.find_elements(By.CSS_SELECTOR, assignment_button_selector)
+        if len(assignment_buttons) > 1:
+            assignment_buttons[1].click()
+            WebDriverWait(self.driver, self.WAIT_LOADING_PAGE_TIME).until(
+                lambda x: self.driver.find_element(By.CSS_SELECTOR, continue_button_selector)
+            )
+            continue_button = self.driver.find_element(By.CSS_SELECTOR, continue_button_selector)
+            continue_button.click()
+            WebDriverWait(self.driver, self.WAIT_LOADING_PAGE_TIME).until(
+                lambda x: self.driver.find_element(By.CSS_SELECTOR, assignment_button_selector)
+            )
+            assignment_button = self.driver.find_element(By.CSS_SELECTOR, assignment_button_selector)
+            assignment_button.click()
+        else:
+            assignment_buttons[0].click()
+
         WebDriverWait(self.driver, self.WAIT_LOADING_PAGE_TIME).until(
-            lambda x: self.driver.find_element(By.CSS_SELECTOR, textarea_selector)
+            lambda x: self.driver.find_element(By.CSS_SELECTOR, new_file_button_selector)
         )
-        print("Preparing to send keys:", text)
+        counter_error = 0
         while True:
             try:
-                textarea = self.driver.find_element(By.CSS_SELECTOR, textarea_selector)
-                textarea.send_keys(text)
+                new_file_button = self.driver.find_element(By.CSS_SELECTOR, new_file_button_selector)
+                new_file_button.click()
                 break
             except:
-                print("TextArea cannot be sent keys! Send again...")
+                counter_error += 1
+                print("Cannot find new file button")
+                self.driver.refresh()
+                time.sleep(4 * counter_error)
 
-        save_button = self.driver.find_element(By.CSS_SELECTOR, save_button_selector)
-        save_button.click()
-        WebDriverWait(self.driver, self.WAIT_LOADING_PAGE_TIME)
+        time.sleep(1)
+        current_directory = os.getcwd()
+        absolute_path = os.path.join(current_directory, filepath)
+        input_file = self.driver.find_element(By.CSS_SELECTOR, input_file_selector)
+        input_file.send_keys(absolute_path)
+        time.sleep(2)
+
+        upload_button = self.driver.find_element(By.CSS_SELECTOR, upload_button_selector)
+        upload_button.click()
+        time.sleep(5)
+
+        try:
+            submit_button = self.driver.find_element(By.CSS_SELECTOR, submit_button_selector)
+            submit_button.click()
+        except:
+            return False
 
         # Check if save fail, we will navigate to start assignment page
         textarea = self.driver.find_elements(By.CSS_SELECTOR, textarea_selector)
         if len(textarea) > 0:
-            print("FAILLLLLLLLLLLLLLLLLUIRE")
+            return False
+        else:
+            return True
 
     def log(self, message):
         with open(self.log_file, "a") as file:
